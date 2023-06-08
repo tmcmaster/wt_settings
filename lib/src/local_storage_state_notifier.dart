@@ -1,7 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'utils/logging.dart';
+import 'package:wt_logging/wt_logging.dart';
 
 abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
   static final log = logger(LocalStorageStateNotifier);

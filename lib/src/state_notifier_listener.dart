@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'utils/logging.dart';
+import 'package:wt_logging/wt_logging.dart';
 
 // TODO: review if this class is need for changing themes.
 class StateNotifierListener<T> implements Listenable {

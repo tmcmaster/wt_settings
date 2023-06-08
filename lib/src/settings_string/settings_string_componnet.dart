@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:wt_logging/wt_logging.dart';
 
-import '../utils/logging.dart';
 import 'settings_string_providers.dart';
 
 class SettingsStringComponent extends HookConsumerWidget {

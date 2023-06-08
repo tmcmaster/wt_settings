@@ -12,9 +12,12 @@ dependencies:
     sdk: flutter
   wt_models:
     git: git@github.com:tmcmaster/wt_models.git
+  wt_logging:
+    git: git@github.com:tmcmaster/wt_logging.git
   riverpod:
   logger:
   hooks_riverpod:
+  flutter_hooks:
   shared_preferences:
   date_time_picker:
     git:

@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:wt_logging/wt_logging.dart';
 
 import '../local_storage_state_notifier.dart';
-import '../utils/logging.dart';
 
 class SettingsObjectNotifier<T> extends LocalStorageStateNotifier<T?> {
   static final log = logger(SettingsObjectNotifier);
@@ -25,13 +25,15 @@ class SettingsObjectNotifier<T> extends LocalStorageStateNotifier<T?> {
       log.d('List has changed $newList}');
       if (_siteLoaded()) {
         if (_siteSelected()) {
-          log.d('There is a current selected value, so checking if the current value is in the new list');
+          log.d(
+              'There is a current selected value, so checking if the current value is in the new list');
         } else {
           if (_listLoaded(newList)) {
             if (_listContainsSelectedSite(newList)) {
               log.d('Selected value was in the new list');
             } else {
-              log.d('There is no current selected value, so first item of the list will be selected.');
+              log.d(
+                  'There is no current selected value, so first item of the list will be selected.');
               load();
             }
           } else {
@@ -39,7 +41,8 @@ class SettingsObjectNotifier<T> extends LocalStorageStateNotifier<T?> {
           }
         }
       } else {
-        log.d('List has loaded, but the selected value has not loaded yet. Reloading selected value.');
+        log.d(
+            'List has loaded, but the selected value has not loaded yet. Reloading selected value.');
         load();
       }
     });

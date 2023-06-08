@@ -24,4 +24,3 @@ export 'src/settings_string/settings_string_componnet.dart';
 export 'src/settings_string/settings_string_notifier.dart';
 export 'src/settings_string/settings_string_providers.dart';
 export 'src/state_notifier_listener.dart';
-export 'src/utils/logging.dart';
