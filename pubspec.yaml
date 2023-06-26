@@ -2,6 +2,7 @@ name: wt_settings
 description: A new Flutter package project.
 version: 0.0.1
 homepage: https://github.com/tmcmaster/wt_settings
+publish_to: none
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -11,9 +12,11 @@ dependencies:
   flutter:
     sdk: flutter
   wt_models:
-    git: git@github.com:tmcmaster/wt_models.git
+    git:
+      url: https://github.com/tmcmaster/wt_models.git
   wt_logging:
-    git: git@github.com:tmcmaster/wt_logging.git
+    git:
+      url: https://github.com/tmcmaster/wt_logging.git
   riverpod:
   logger:
   hooks_riverpod:
