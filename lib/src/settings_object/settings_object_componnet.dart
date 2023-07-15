@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_settings/src/object_state_notifier.dart';
+import 'package:wt_settings/src/settings_object/settings_object_notifier.dart';
+import 'package:wt_settings/src/settings_object/settings_object_providers.dart';
 
-import '../object_state_notifier.dart';
-import 'settings_object_notifier.dart';
-import 'settings_object_providers.dart';
-
-class SettingsObjectComponent<T, N extends ObjectStateNotifier<T>> extends HookConsumerWidget {
+class SettingsObjectComponent<T, N extends ObjectStateNotifier<T>> extends ConsumerWidget {
   final SettingsObjectProviders<T> providers;
   final String Function(T object) getId;
   final String Function(T object) getLabel;
@@ -41,10 +40,12 @@ class SettingsObjectComponent<T, N extends ObjectStateNotifier<T>> extends HookC
               }
             },
             items: values
-                .map((v) => DropdownMenuItem<T?>(
-                      value: v,
-                      child: Text(getLabel(v)),
-                    ))
+                .map(
+                  (v) => DropdownMenuItem<T?>(
+                    value: v,
+                    child: Text(getLabel(v)),
+                  ),
+                )
                 .toList(),
           ),
       ],

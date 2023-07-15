@@ -1,4 +1,4 @@
-import '../local_storage_state_notifier.dart';
+import 'package:wt_settings/src/local_storage_state_notifier.dart';
 
 class SettingsBoolNotifier extends LocalStorageStateNotifier<bool> {
   SettingsBoolNotifier({
@@ -7,8 +7,8 @@ class SettingsBoolNotifier extends LocalStorageStateNotifier<bool> {
   }) : super(none: false);
 
   @override
-  bool decode(String? value) => value == "true" ? true : false;
+  bool decode(String? value) => value == 'true';
 
   @override
-  String encode(bool? value) => value == null ? "false" : value.toString();
+  String encode(bool? value) => value == null ? 'false' : value.toString();
 }

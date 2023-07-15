@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_settings/src/settings_color/settings_color_notifier.dart';
+import 'package:wt_settings/src/settings_color/settings_color_providers.dart';
+import 'package:wt_settings/src/settings_color/widgets/color_picker.dart';
 
-import 'settings_color_notifier.dart';
-import 'settings_color_providers.dart';
-import 'widgets/color_picker.dart';
-
-class SettingsColorComponent extends HookConsumerWidget {
+class SettingsColorComponent extends ConsumerWidget {
   final SettingsColorProviders providers;
 
   const SettingsColorComponent({

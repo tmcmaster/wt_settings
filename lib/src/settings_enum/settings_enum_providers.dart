@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_settings/src/base_settings_providers.dart';
+import 'package:wt_settings/src/settings_enum/settings_enum_component.dart';
+import 'package:wt_settings/src/settings_enum/settings_enum_notifier.dart';
 
-import '../base_settings_providers.dart';
-import 'settings_enum_component.dart';
-import 'settings_enum_notifier.dart';
-
-class SettingsEnumProviders<T extends Enum> extends BaseSettingsProviders<SettingsEnumNotifier<T>, T> {
+class SettingsEnumProviders<T extends Enum>
+    extends BaseSettingsProviders<SettingsEnumNotifier<T>, T> {
   final List<T> values;
 
   SettingsEnumProviders({

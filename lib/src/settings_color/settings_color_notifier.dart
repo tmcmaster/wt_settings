@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../local_storage_state_notifier.dart';
+import 'package:wt_settings/src/local_storage_state_notifier.dart';
 
 class SettingsColorNotifier extends LocalStorageStateNotifier<MaterialColor> {
   final List<MaterialColor> values;
@@ -14,13 +13,13 @@ class SettingsColorNotifier extends LocalStorageStateNotifier<MaterialColor> {
 
   @override
   MaterialColor decode(String? value) {
-    int colorValue = value == null ? Colors.red.value : int.parse(value);
+    final colorValue = value == null ? Colors.red.value : int.parse(value);
     final colorOptions = values.where((color) => color.value == colorValue);
     return colorOptions.isEmpty ? Colors.blue : colorOptions.first;
   }
 
   @override
-  String encode(MaterialColor color) {
-    return color.value.toString();
+  String encode(MaterialColor value) {
+    return value.value.toString();
   }
 }

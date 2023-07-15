@@ -1,4 +1,4 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BaseSettingsProviders<N extends StateNotifier<T>, T> {
   final StateNotifierProvider<N, T> value;

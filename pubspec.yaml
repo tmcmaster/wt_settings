@@ -5,30 +5,42 @@ homepage: https://github.com/tmcmaster/wt_settings
 publish_to: 'none'
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
-  flutter: ">=1.17.0"
+  sdk: '>=3.0.3 <4.0.0'
+
+# Scripts to be run with rps
+scripts:
+  init: flutter pub get
+  clean: flutter clean
+  refresh: flutter clean; flutter pub get
+  test: flutter test
+  check: dart analyze
+  fix: dart fix --dry-run
+  freezed:
+    build: dart run build_runner build --delete-conflicting-outputs
+  coverage:
+    generate: ./bin/generate_coverage.sh
+    view: open coverage/html/index.html
 
 dependencies:
-  flutter:
-    sdk: flutter
-  wt_models:
-    git:
-      url: https://github.com/tmcmaster/wt_models.git
-  wt_logging:
-    git:
-      url: https://github.com/tmcmaster/wt_logging.git
-  riverpod:
-  logger:
-  hooks_riverpod:
-  flutter_hooks:
-  shared_preferences:
   date_time_picker:
     git:
       url: https://github.com/tmcmaster/date_time_picker.git
-  spring_button:
+  flutter:
+    sdk: flutter
+  flutter_hooks: ^0.19.0
+  flutter_riverpod: ^2.3.6
+  logger: ^1.4.0
+  shared_preferences: ^2.2.0
+  spring_button: ^2.0.0
+  wt_logging:
+    git:
+      url: https://github.com/tmcmaster/wt_logging.git
+  wt_models:
+    git:
+      url: https://github.com/tmcmaster/wt_models.git
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints:
 
 flutter:

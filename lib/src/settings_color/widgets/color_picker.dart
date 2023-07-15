@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:spring_button/spring_button.dart';
+import 'package:wt_logging/wt_logging.dart';
 
 final Map<int, double> _correctSizes = {};
 final PageController pageController = PageController(keepPage: true);
 
 class FastColorPicker extends StatelessWidget {
+  static final log = logger(FastColorPicker);
+
   final MaterialColor selectedColor;
   final IconData? icon;
   final Function(MaterialColor) onColorSelected;
 
   const FastColorPicker({
-    Key? key,
+    super.key,
     this.icon,
     this.selectedColor = Colors.blue,
     required this.onColorSelected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class FastColorPicker extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 8,
             ),
             child: SelectedColor(
@@ -47,7 +50,7 @@ class FastColorPicker extends StatelessWidget {
   }
 
   List<Widget> createColors(BuildContext context, List<MaterialColor> colors) {
-    double size = _correctSizes[colors.length] ??
+    final size = _correctSizes[colors.length] ??
         correctButtonSize(
           colors.length,
           MediaQuery.of(context).size.width,
@@ -61,7 +64,7 @@ class FastColorPicker extends StatelessWidget {
             child: AnimatedContainer(
               width: size,
               height: size,
-              duration: Duration(milliseconds: 100),
+              duration: const Duration(milliseconds: 100),
               decoration: BoxDecoration(
                 color: c,
                 shape: BoxShape.circle,
@@ -79,7 +82,7 @@ class FastColorPicker extends StatelessWidget {
             ),
           ),
           onTap: () {
-            print('=====>> value has changed: $c');
+            log.d('=====>> value has changed: $c');
             onColorSelected.call(c);
           },
           useCache: false,
@@ -90,14 +93,14 @@ class FastColorPicker extends StatelessWidget {
   }
 
   double correctButtonSize(int itemSize, double screenWidth) {
-    double firstSize = 52;
-    double maxWidth = screenWidth - firstSize;
+    const firstSize = 52;
+    final maxWidth = screenWidth - firstSize;
     bool isSizeOkay = false;
     double finalSize = 48;
     do {
       finalSize -= 2;
-      double eachSize = finalSize * 1.2;
-      double buttonsArea = itemSize * eachSize;
+      final eachSize = finalSize * 1.2;
+      final buttonsArea = itemSize * eachSize;
       isSizeOkay = maxWidth > buttonsArea;
     } while (!isSizeOkay);
     _correctSizes[itemSize] = finalSize;
@@ -109,19 +112,12 @@ class SelectedColor extends StatelessWidget {
   final MaterialColor selectedColor;
   final IconData? icon;
 
-  const SelectedColor({Key? key, required this.selectedColor, this.icon}) : super(key: key);
+  const SelectedColor({super.key, required this.selectedColor, this.icon});
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 30,
       height: 30,
-      child: icon != null
-          ? Icon(
-              icon,
-              color: selectedColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,
-              size: 22,
-            )
-          : null,
       decoration: BoxDecoration(
         color: selectedColor,
         shape: BoxShape.circle,
@@ -129,13 +125,20 @@ class SelectedColor extends StatelessWidget {
           width: 2,
           color: Colors.white,
         ),
-        boxShadow: [
-          const BoxShadow(
+        boxShadow: const [
+          BoxShadow(
             blurRadius: 6,
             color: Colors.black38,
           ),
         ],
       ),
+      child: icon != null
+          ? Icon(
+              icon,
+              color: selectedColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,
+              size: 22,
+            )
+          : null,
     );
   }
 }

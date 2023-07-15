@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_settings/src/settings_bool/settings_bool_providers.dart';
 
-import 'settings_bool_providers.dart';
-
-class SettingsBoolComponent extends HookConsumerWidget {
+class SettingsBoolComponent extends ConsumerWidget {
   final SettingsBoolProviders providers;
 
   const SettingsBoolComponent({

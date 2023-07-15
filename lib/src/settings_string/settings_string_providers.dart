@@ -1,8 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import 'settings_string_componnet.dart';
-import 'settings_string_notifier.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_settings/src/settings_string/settings_string_componnet.dart';
+import 'package:wt_settings/src/settings_string/settings_string_notifier.dart';
 
 class SettingsStringProviders {
   late StateNotifierProvider<SettingsStringNotifier, String> value;
@@ -28,7 +27,7 @@ class SettingsStringProviders {
 
   Widget get component => SettingsStringComponent(
         providers: this,
-        label: "API Token",
-        hint: "Enter API token",
+        label: 'API Token',
+        hint: 'Enter API token',
       );
 }

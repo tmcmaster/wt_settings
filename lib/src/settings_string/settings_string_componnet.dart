@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_logging/wt_logging.dart';
+import 'package:wt_settings/src/settings_string/settings_string_providers.dart';
 
-import 'settings_string_providers.dart';
-
-class SettingsStringComponent extends HookConsumerWidget {
+class SettingsStringComponent extends ConsumerWidget {
   static final log = logger(SettingsStringComponent);
 
   final SettingsStringProviders providers;

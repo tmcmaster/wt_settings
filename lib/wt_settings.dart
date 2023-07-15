@@ -1,3 +1,4 @@
+/// This is a library for using Shared Preferences and Riverpod for managing settings.
 library wt_settings;
 
 export 'src/base_settings_providers.dart';

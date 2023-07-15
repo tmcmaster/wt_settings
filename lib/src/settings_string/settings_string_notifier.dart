@@ -1,4 +1,4 @@
-import '../local_storage_state_notifier.dart';
+import 'package:wt_settings/src/local_storage_state_notifier.dart';
 
 class SettingsStringNotifier extends LocalStorageStateNotifier<String> {
   SettingsStringNotifier({

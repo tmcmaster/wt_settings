@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_logging/wt_logging.dart';
 
 // TODO: review if this class is need for changing themes.
@@ -7,7 +7,7 @@ class StateNotifierListener<T> implements Listenable {
   static final log = logger(StateNotifierListener);
 
   final StateNotifier<T> notifier;
-  final Map<Function, Function> removeListenerMap = {};
+  final removeListenerMap = <Function, RemoveListener>{};
 
   StateNotifierListener(this.notifier);
 
@@ -16,7 +16,7 @@ class StateNotifierListener<T> implements Listenable {
     if (removeListenerMap[listener] == null) {
       log.d('Adding a listener notifier: ${notifier.runtimeType}');
       removeListenerMap[listener] = notifier.addListener((value) {
-        log.d('Value has changed: ${value.toString()}');
+        log.d('Value has changed: $value');
         listener();
       });
     }
@@ -24,7 +24,7 @@ class StateNotifierListener<T> implements Listenable {
 
   @override
   void removeListener(VoidCallback listener) {
-    final removeListenerFunction = removeListenerMap[listener];
+    final RemoveListener? removeListenerFunction = removeListenerMap[listener];
     if (removeListenerFunction != null) {
       log.d('Removing a listener from notifier: ${notifier.runtimeType}');
       removeListenerFunction();

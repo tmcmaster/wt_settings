@@ -1,12 +1,11 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_logging/wt_logging.dart';
+import 'package:wt_settings/src/settings_date/settings_date_providers.dart';
 
-import 'settings_date_providers.dart';
-
-class SettingsDateComponent extends HookConsumerWidget {
+class SettingsDateComponent extends ConsumerWidget {
   static final log = logger(SettingsDateComponent);
 
   final SettingsDateProviders providers;

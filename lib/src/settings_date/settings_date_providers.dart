@@ -1,8 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../settings_date/settings_date_component.dart';
-import 'settings_date_notifier.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_settings/src/settings_date/settings_date_component.dart';
+import 'package:wt_settings/src/settings_date/settings_date_notifier.dart';
 
 class SettingsDateProviders {
   late StateNotifierProvider<SettingsDateNotifier, String> value;
