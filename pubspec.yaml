@@ -27,7 +27,6 @@ dependencies:
       url: https://github.com/tmcmaster/date_time_picker.git
   flutter:
     sdk: flutter
-  flutter_hooks: ^0.19.0
   flutter_riverpod: ^2.3.6
   logger: ^1.4.0
   shared_preferences: ^2.2.0
