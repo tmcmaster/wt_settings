@@ -1,6 +1,6 @@
 name: wt_settings
 description: Components to manage settings using SharedPreferences.
-version: 0.0.1
+version: 1.0.0+1
 homepage: https://github.com/tmcmaster/wt_settings
 publish_to: 'none'
 
