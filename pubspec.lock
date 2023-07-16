@@ -380,7 +380,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "8be1fb3e62befaa0ce4cd4ce71fd26bb19dd72f8"
+      resolved-ref: a402f8ff357059fed093188de58d91a43b7f0b95
       url: "https://github.com/tmcmaster/wt_models.git"
     source: git
     version: "1.0.0+1"
