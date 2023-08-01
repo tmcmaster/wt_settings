@@ -5,7 +5,7 @@ homepage: https://github.com/tmcmaster/wt_settings
 publish_to: 'none'
 
 environment:
-  sdk: '>=3.0.3 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 # Scripts to be run with rps
 scripts:
