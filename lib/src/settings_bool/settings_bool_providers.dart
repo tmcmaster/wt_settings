@@ -4,7 +4,8 @@ import 'package:wt_settings/src/base_settings_providers.dart';
 import 'package:wt_settings/src/settings_bool/settings_bool_componnet.dart';
 import 'package:wt_settings/src/settings_bool/settings_bool_notifier.dart';
 
-class SettingsBoolProviders extends BaseSettingsProviders<SettingsBoolNotifier, bool> {
+class SettingsBoolProviders
+    extends BaseSettingsProviders<SettingsBoolNotifier, bool> {
   final bool hideLabel;
   // late StateNotifierProvider<SettingsBoolNotifier, bool> value;
   SettingsBoolProviders({
@@ -12,6 +13,7 @@ class SettingsBoolProviders extends BaseSettingsProviders<SettingsBoolNotifier, 
     required super.hint,
     required String key,
     bool? initialValue,
+    bool? none,
     this.hideLabel = false,
   }) : super(
           value: StateNotifierProvider(
@@ -19,6 +21,7 @@ class SettingsBoolProviders extends BaseSettingsProviders<SettingsBoolNotifier, 
             (ref) => SettingsBoolNotifier(
               key: key,
               initialValue: initialValue ?? true,
+              none: none,
             ),
           ),
         );
