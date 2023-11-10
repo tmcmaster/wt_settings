@@ -4,7 +4,8 @@ class SettingsBoolNotifier extends LocalStorageStateNotifier<bool> {
   SettingsBoolNotifier({
     required super.key,
     required super.initialValue,
-  }) : super(none: false);
+    super.none = false,
+  });
 
   @override
   bool decode(String? value) => value == 'true';
