@@ -25,6 +25,7 @@ class SettingsEnumComponent<T extends Enum> extends ConsumerWidget {
         DropdownButton<T>(
           isExpanded: false,
           value: value,
+          focusColor: Colors.transparent,
           onChanged: (value) {
             if (value != null) notifier.replaceValue(value);
           },
@@ -41,5 +42,6 @@ class SettingsEnumComponent<T extends Enum> extends ConsumerWidget {
     );
   }
 
-  String _getTitle(String title) => title.contains('.') ? title.split('.')[1] : title;
+  String _getTitle(String title) =>
+      title.contains('.') ? title.split('.')[1] : title;
 }
