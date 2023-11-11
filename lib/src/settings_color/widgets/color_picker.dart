@@ -11,37 +11,35 @@ class FastColorPicker extends StatelessWidget {
   final MaterialColor selectedColor;
   final IconData? icon;
   final Function(MaterialColor) onColorSelected;
+  final List<MaterialColor> colors;
 
   const FastColorPicker({
     super.key,
     this.icon,
     this.selectedColor = Colors.blue,
     required this.onColorSelected,
+    required this.colors,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 46,
-      // width: MediaQuery.of(context).size.width,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8,
-            ),
-            child: SelectedColor(
-              icon: icon,
-              selectedColor: selectedColor,
-            ),
+          SelectedColor(
+            icon: icon,
+            selectedColor: selectedColor,
           ),
+          const SizedBox(width: 24),
           Expanded(
-            child: SizedBox(
-              height: 42,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: createColors(context, Colors.primaries),
-              ),
+            child: Wrap(
+              alignment: WrapAlignment.start,
+              direction: Axis.horizontal,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: createColors(context, colors),
             ),
           )
         ],
@@ -50,17 +48,13 @@ class FastColorPicker extends StatelessWidget {
   }
 
   List<Widget> createColors(BuildContext context, List<MaterialColor> colors) {
-    final size = _correctSizes[colors.length] ??
-        correctButtonSize(
-          colors.length,
-          MediaQuery.of(context).size.width,
-        );
+    const size = SelectedColor.size;
     return [
       for (var c in colors)
         SpringButton(
           SpringButtonType.OnlyScale,
           Padding(
-            padding: EdgeInsets.all(size * 0.1),
+            padding: const EdgeInsets.symmetric(horizontal: 2),
             child: AnimatedContainer(
               width: size,
               height: size,
@@ -109,6 +103,8 @@ class FastColorPicker extends StatelessWidget {
 }
 
 class SelectedColor extends StatelessWidget {
+  static const size = 30.0;
+
   final MaterialColor selectedColor;
   final IconData? icon;
 
@@ -116,8 +112,8 @@ class SelectedColor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 30,
-      height: 30,
+      width: size,
+      height: size,
       decoration: BoxDecoration(
         color: selectedColor,
         shape: BoxShape.circle,
@@ -135,7 +131,9 @@ class SelectedColor extends StatelessWidget {
       child: icon != null
           ? Icon(
               icon,
-              color: selectedColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,
+              color: selectedColor.computeLuminance() > 0.5
+                  ? Colors.black
+                  : Colors.white,
               size: 22,
             )
           : null,

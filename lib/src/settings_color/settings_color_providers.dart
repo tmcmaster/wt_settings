@@ -4,7 +4,8 @@ import 'package:wt_settings/src/base_settings_providers.dart';
 import 'package:wt_settings/src/settings_color/settings_color_component.dart';
 import 'package:wt_settings/src/settings_color/settings_color_notifier.dart';
 
-class SettingsColorProviders extends BaseSettingsProviders<SettingsColorNotifier, MaterialColor> {
+class SettingsColorProviders
+    extends BaseSettingsProviders<SettingsColorNotifier, MaterialColor> {
   final List<MaterialColor> values;
 
   SettingsColorProviders({
@@ -26,5 +27,8 @@ class SettingsColorProviders extends BaseSettingsProviders<SettingsColorNotifier
           ),
         );
 
-  Widget get component => SettingsColorComponent(providers: this);
+  Widget get component => SettingsColorComponent(
+        providers: this,
+        colors: values,
+      );
 }
