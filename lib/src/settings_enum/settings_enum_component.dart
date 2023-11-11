@@ -16,7 +16,8 @@ class SettingsEnumComponent<T extends Enum> extends ConsumerWidget {
     final value = ref.watch(providers.value);
     final SettingsEnumNotifier<T> notifier = ref.read(providers.notifier);
 
-    return Row(
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         Text(providers.label),
         const SizedBox(
