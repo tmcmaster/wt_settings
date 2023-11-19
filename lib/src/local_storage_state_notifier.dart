@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wt_logging/wt_logging.dart';
 
 abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
-  static final log = logger(LocalStorageStateNotifier);
+  static final log = logger(LocalStorageStateNotifier, level: Level.debug);
 
   final String key;
   final T none;
@@ -26,7 +26,8 @@ abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
       if (decodedValue == null) {
         log.d('Could not decode data from Key($key).');
       } else {
-        log.d('Loaded data for Key($key): Encoded($encodedValue), Decoded($decodedValue)');
+        log.d(
+            'Loaded data for Key($key): Encoded($encodedValue), Decoded($decodedValue)');
         replaceValue(decodedValue);
       }
     }
@@ -36,7 +37,8 @@ abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
     log.d('Replacing data with Key($key): $newValue');
     state = newValue;
     final encodedValue = encode(state);
-    log.d('Saving data with Key($key): Encoded($encodedValue), Decoded($state)');
+    log.d(
+        'Saving data with Key($key): Encoded($encodedValue), Decoded($state)');
     final localStorage = await SharedPreferences.getInstance();
     if (encodedValue == null) {
       localStorage.remove(key);
