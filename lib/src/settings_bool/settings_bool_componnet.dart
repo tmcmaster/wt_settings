@@ -16,6 +16,7 @@ class SettingsBoolComponent extends ConsumerWidget {
     final notifier = ref.read(providers.notifier);
 
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         if (!providers.hideLabel)
           Padding(
