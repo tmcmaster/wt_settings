@@ -17,7 +17,8 @@ class SettingsDateComponent extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<SettingsDateComponent> createState() => _SettingsDateComponentState();
+  ConsumerState<SettingsDateComponent> createState() =>
+      _SettingsDateComponentState();
 }
 
 class _SettingsDateComponentState extends ConsumerState<SettingsDateComponent> {
@@ -50,7 +51,7 @@ class _SettingsDateComponentState extends ConsumerState<SettingsDateComponent> {
         type: DateTimePickerType.date,
         controller: controller,
         firstDate: DateTime(2020),
-        lastDate: DateTime(2024),
+        lastDate: DateTime(2030),
         icon: const Icon(Icons.event),
         dateLabelText: 'From',
         onChanged: (value) {
