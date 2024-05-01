@@ -4,11 +4,13 @@ import 'package:wt_settings/src/object_state_notifier.dart';
 import 'package:wt_settings/src/settings_object/settings_object_notifier.dart';
 import 'package:wt_settings/src/settings_object/settings_object_providers.dart';
 
-class SettingsObjectComponent<T, N extends ObjectStateNotifier<T>> extends ConsumerWidget {
+class SettingsObjectComponent<T, N extends ObjectStateNotifier<T>>
+    extends ConsumerWidget {
   final SettingsObjectProviders<T> providers;
   final String Function(T object) getId;
   final String Function(T object) getLabel;
   final T none;
+
   const SettingsObjectComponent({
     super.key,
     required this.providers,
@@ -32,7 +34,7 @@ class SettingsObjectComponent<T, N extends ObjectStateNotifier<T>> extends Consu
         if (values != null && values.isNotEmpty && value != null)
           DropdownButton<T?>(
             isExpanded: false,
-            value: value == none ? null : value,
+            value: (value == none ? null : value) as T?,
             onChanged: (value) {
               if (value != null) {
                 // ref.read(selectedProvider.notifier).setState(value);
