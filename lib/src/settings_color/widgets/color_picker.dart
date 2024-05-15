@@ -41,7 +41,7 @@ class FastColorPicker extends StatelessWidget {
               crossAxisAlignment: WrapCrossAlignment.center,
               children: createColors(context, colors),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -50,7 +50,7 @@ class FastColorPicker extends StatelessWidget {
   List<Widget> createColors(BuildContext context, List<MaterialColor> colors) {
     const size = SelectedColor.size;
     return [
-      for (var c in colors)
+      for (final c in colors)
         SpringButton(
           SpringButtonType.OnlyScale,
           Padding(
@@ -66,7 +66,7 @@ class FastColorPicker extends StatelessWidget {
                   width: c == selectedColor ? 4 : 2,
                   color: Colors.white,
                 ),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     blurRadius: size * 0.1,
                     color: Colors.black12,
@@ -131,9 +131,7 @@ class SelectedColor extends StatelessWidget {
       child: icon != null
           ? Icon(
               icon,
-              color: selectedColor.computeLuminance() > 0.5
-                  ? Colors.black
-                  : Colors.white,
+              color: selectedColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,
               size: 22,
             )
           : null,

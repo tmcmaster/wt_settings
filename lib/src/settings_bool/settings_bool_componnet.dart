@@ -28,7 +28,7 @@ class SettingsBoolComponent extends ConsumerWidget {
           onChanged: (value) {
             notifier.replaceValue(value);
           },
-        )
+        ),
       ],
     );
   }

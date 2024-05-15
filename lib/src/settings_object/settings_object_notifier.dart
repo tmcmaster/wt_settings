@@ -62,7 +62,8 @@ class SettingsObjectNotifier<T> extends LocalStorageStateNotifier<T?> {
   }
 
   bool _siteLoaded() {
-    // TODO: There is an issue when the value is not in the SharedPreferences. need to pass a default when reading from the preferences.
+    // TODO: There is an issue when the value is not in the SharedPreferences.
+    //     need to pass a default when reading from the preferences.
     return state != null;
   }
 

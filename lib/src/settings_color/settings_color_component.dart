@@ -33,7 +33,7 @@ class SettingsColorComponent extends ConsumerWidget {
               notifier.replaceValue(color);
             },
           ),
-        )
+        ),
       ],
     );
   }
