@@ -92,7 +92,9 @@ abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
     Future.delayed(
       const Duration(seconds: 2),
       () {
-        completer.completeError('Loading was unsuccessful');
+        if (!_loaded) {
+          completer.completeError('Loading was unsuccessful');
+        }
       },
     );
 
