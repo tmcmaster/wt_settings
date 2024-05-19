@@ -49,3 +49,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+#dependency_overrides:
+#  date_time_picker:
+#    path: ../../fork/date_time_picker
