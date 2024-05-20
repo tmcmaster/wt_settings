@@ -5,7 +5,7 @@ import 'package:wt_logging/wt_logging.dart';
 import 'package:wt_settings/src/storate/settings_storage.dart';
 
 abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
-  static final log = logger('LocalStorageStateNotifier', level: Level.debug);
+  static final log = logger('LocalStorageStateNotifier', level: Level.warning);
 
   final String key;
   final T none;
