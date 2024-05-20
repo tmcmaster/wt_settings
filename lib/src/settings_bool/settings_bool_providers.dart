@@ -4,8 +4,7 @@ import 'package:wt_settings/src/base_settings_providers.dart';
 import 'package:wt_settings/src/settings_bool/settings_bool_componnet.dart';
 import 'package:wt_settings/src/settings_bool/settings_bool_notifier.dart';
 
-class SettingsBoolProviders
-    extends BaseSettingsProviders<SettingsBoolNotifier, bool> {
+class SettingsBoolProviders extends BaseSettingsProviders<SettingsBoolNotifier, bool> {
   final bool hideLabel;
   // late StateNotifierProvider<SettingsBoolNotifier, bool> value;
   SettingsBoolProviders({
@@ -27,4 +26,14 @@ class SettingsBoolProviders
         );
 
   Widget get component => SettingsBoolComponent(providers: this);
+
+  Widget customComponent({
+    Color? color,
+    MainAxisAlignment? alignment,
+  }) =>
+      SettingsBoolComponent(
+        providers: this,
+        color: color,
+        alignment: alignment,
+      );
 }
