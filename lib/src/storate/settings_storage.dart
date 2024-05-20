@@ -26,7 +26,7 @@ mixin SettingsStorage {
       final instance = await SettingsStorage.sharedPreferences();
       log.i('Default SettingsStorage is of type: ${instance.runtimeType}');
       if (_instance == null) {
-        log.w('SettingsStorage has been initialised');
+        log.i('SettingsStorage has been initialised');
         return _instance = instance;
       } else {
         log.w('SettingsStorage had already been initialised');
