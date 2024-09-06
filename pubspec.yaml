@@ -30,7 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.3.6
-  logger: ^1.4.0
+  logger: ^2.4.0
   mockito: any
   number_selector: ^1.0.7
   shared_preferences: ^2.2.0

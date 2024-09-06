@@ -4,7 +4,7 @@ import 'package:wt_logging/wt_logging.dart';
 
 // TODO: review if this class is need for changing themes.
 class StateNotifierListener<T> implements Listenable {
-  static final log = logger(StateNotifierListener);
+  static final log = logger(StateNotifierListener, level: Level.debug);
 
   final StateNotifier<T> notifier;
   final removeListenerMap = <Function, RemoveListener>{};
