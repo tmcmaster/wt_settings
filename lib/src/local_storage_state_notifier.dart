@@ -4,8 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_logging/wt_logging.dart';
 import 'package:wt_settings/src/storate/settings_storage.dart';
 
+// TODO: need to do some more testing and cleanup regarding timing issues
 abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
-  static final log = logger('LocalStorageStateNotifier', level: Level.warning);
+  static final log = logger('LocalStorageStateNotifier', level: Level.debug);
 
   final String key;
   final T none;
@@ -16,22 +17,24 @@ abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
     required T initialValue,
   }) : super(initialValue) {
     log.d('About to load values');
-    load().then((value) {
-      log.d('Values have been loaded.');
-      _loaded = true;
+    Future.delayed(const Duration(seconds: 1), () {
+      load().then((loaded) {
+        log.d('Values have been loaded: $loaded');
+        _loaded = loaded;
+      });
     });
   }
 
   Future<SettingsStorage> get settingStorage => SettingsStorage.instance();
 
-  Future<void> reload() async {
+  Future<bool> reload() async {
     _loaded = false;
     return load();
   }
 
-  Future<void> load() async {
+  Future<bool> load() async {
     if (_loaded) {
-      return Future.value();
+      return true;
     }
     final encodedValue = (await settingStorage).getString(key);
     if (encodedValue == null) {
@@ -41,16 +44,23 @@ abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
       final decodedValue = decode(encodedValue);
       if (decodedValue == null) {
         log.d('Could not decode data from Key($key).');
+        return false;
       } else {
         log.d('Loaded data for Key($key): Encoded($encodedValue), Decoded($decodedValue)');
         replaceValue(decodedValue);
       }
     }
+    return true;
   }
 
   Future<void> replaceValue(T newValue) async {
     if (!_loaded) {
-      await _waitForLoadingToComplete();
+      try {
+        await _waitForLoadingToComplete();
+      } catch (error) {
+        log.e('Waiting for load to complete failed: $error');
+        return;
+      }
     }
 
     log.d('Replacing data with Key($key): $newValue');
@@ -78,11 +88,12 @@ abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
     if (_loaded) return Future.value();
     final completer = Completer<void>();
 
-    Timer.periodic(
+    final timer = Timer.periodic(
       const Duration(milliseconds: 100),
       (timer) {
         log.d('Waiting for $key loading to complete....');
         if (_loaded) {
+          log.d('Loading was successful');
           timer.cancel();
           completer.complete();
         }
@@ -92,8 +103,13 @@ abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
     Future.delayed(
       const Duration(seconds: 2),
       () {
+        timer.cancel();
         if (!_loaded) {
+          log.d('Loading was unsuccessful');
           completer.completeError('Loading was unsuccessful');
+        } else if (!completer.isCompleted) {
+          log.d('Loading was successful. Race condition');
+          completer.complete();
         }
       },
     );

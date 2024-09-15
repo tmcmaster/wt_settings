@@ -3,7 +3,7 @@ import 'package:wt_logging/wt_logging.dart';
 import 'package:wt_settings/src/local_storage_state_notifier.dart';
 
 class SettingsObjectNotifier<T> extends LocalStorageStateNotifier<T?> {
-  static final log = logger(SettingsObjectNotifier);
+  static final log = logger(SettingsObjectNotifier, level: Level.debug);
 
   List<T> _values = const [];
   final String Function(T object) getId;
@@ -24,29 +24,26 @@ class SettingsObjectNotifier<T> extends LocalStorageStateNotifier<T?> {
       log.d('List has changed $newList}');
       if (_siteLoaded()) {
         if (_siteSelected()) {
-          log.d(
-            'There is a current selected value, so checking if the current value is in the new list',
-          );
+          log.d('There is a current selected value, '
+              'so checking if the current value is in the new list');
         } else {
           if (_listLoaded(newList)) {
             if (_listContainsSelectedSite(newList)) {
               log.d('Selected value was in the new list');
             } else {
-              log.d(
-                'There is no current selected value, so first item of the list will be selected.',
-              );
+              log.d('There is no current selected value, '
+                  'so first item of the list will be selected.');
               load();
-              // TODO: I suspect that the load here needs to be replaces with the following
-              //_setSiteToFirstSiteInList();
+              _setSiteToFirstSiteInList(_values);
             }
           } else {
-            log.d('There is no current selected value, but list has not been loaded yet.');
+            log.d('There is no current selected value, '
+                'but list has not been loaded yet.');
           }
         }
       } else {
-        log.d(
-          'List has loaded, but the selected value has not loaded yet. Reloading selected value.',
-        );
+        log.d('List has loaded, but the selected value has not loaded yet. '
+            'Reloading selected value.');
         load();
       }
     });

@@ -19,20 +19,7 @@ mixin SettingsStorage {
   static SettingsStorage? _instance;
 
   static Future<SettingsStorage> instance() async {
-    if (_instance != null) {
-      log.d('SettingsStorage had already been initialised');
-      return _instance!;
-    } else {
-      final instance = await SettingsStorage.sharedPreferences();
-      log.i('Default SettingsStorage is of type: ${instance.runtimeType}');
-      if (_instance == null) {
-        log.i('SettingsStorage has been initialised');
-        return _instance = instance;
-      } else {
-        log.w('SettingsStorage had already been initialised');
-        return _instance!;
-      }
-    }
+    return await SettingsStorage.sharedPreferences();
   }
 
   static Future<SettingsStorage> init(

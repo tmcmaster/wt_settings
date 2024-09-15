@@ -26,21 +26,21 @@ scripts:
 dependencies:
   date_time_picker:
     git:
-      url: https://github.com/tmcmaster/date_time_picker.git
+      url: git@github.com:tmcmaster/date_time_picker.git
   flutter:
     sdk: flutter
-  flutter_riverpod: ^2.3.6
-  logger: ^2.4.0
+  flutter_riverpod:
+  logger:
   mockito: any
-  number_selector: ^1.0.7
-  shared_preferences: ^2.2.0
-  spring_button: ^2.0.0
+  number_selector:
+  shared_preferences:
+  spring_button:
   wt_logging:
     git:
-      url: https://github.com/tmcmaster/wt_logging.git
+      url: git@github.com:tmcmaster/wt_logging.git
   wt_models:
     git:
-      url: https://github.com/tmcmaster/wt_models.git
+      url: git@github.com:tmcmaster/wt_models.git
 
 dev_dependencies:
   build_runner: any
