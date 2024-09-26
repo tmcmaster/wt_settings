@@ -16,13 +16,8 @@ abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
     required this.none,
     required T initialValue,
   }) : super(initialValue) {
-    log.d('About to load values');
-    Future.delayed(const Duration(seconds: 1), () {
-      load().then((loaded) {
-        log.d('Values have been loaded: $loaded');
-        _loaded = loaded;
-      });
-    });
+    log.d('About to load values: $key');
+    Future.delayed(const Duration(milliseconds: 1), load);
   }
 
   Future<SettingsStorage> get settingStorage => SettingsStorage.instance();
@@ -40,17 +35,19 @@ abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
     if (encodedValue == null) {
       log.d('Object has been loaded, but it was null. Setting $key to "none".');
       state = none;
+      return _loaded = true;
     } else {
       final decodedValue = decode(encodedValue);
       if (decodedValue == null) {
         log.d('Could not decode data from Key($key).');
-        return false;
+        return _loaded = false;
       } else {
         log.d('Loaded data for Key($key): Encoded($encodedValue), Decoded($decodedValue)');
         replaceValue(decodedValue);
+        log.d('Values have been loaded: $key');
+        return _loaded = true;
       }
     }
-    return true;
   }
 
   Future<void> replaceValue(T newValue) async {
@@ -58,14 +55,14 @@ abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
       try {
         await _waitForLoadingToComplete();
       } catch (error) {
-        log.e('Waiting for load to complete failed: $error');
+        log.e('Waiting for load to complete failed: $key : $error');
         return;
       }
     }
 
     log.d('Replacing data with Key($key): $newValue');
     state = newValue;
-    log.d('AAA: State: $state');
+    log.d('AAA: State: $key : $state');
     final encodedValue = encode(state);
     log.d('AAA: EncodedValue: $encodedValue');
     log.d('Saving data with Key($key): Encoded($encodedValue), Decoded($state)');
@@ -77,8 +74,7 @@ abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
       (await settingStorage).setString(key, encodedValue);
     }
 
-    log.d('AAA: Storage Map: ${await settingStorage}');
-    log.d('aaa: State: $state');
+    log.d('AAA: State: $key : $state');
   }
 
   String? encode(T value);
@@ -93,7 +89,7 @@ abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
       (timer) {
         log.d('Waiting for $key loading to complete....');
         if (_loaded) {
-          log.d('Loading was successful');
+          log.d('Loading was successful: $key');
           timer.cancel();
           completer.complete();
         }
@@ -105,10 +101,10 @@ abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
       () {
         timer.cancel();
         if (!_loaded) {
-          log.d('Loading was unsuccessful');
-          completer.completeError('Loading was unsuccessful');
+          log.d('Loading was unsuccessful: $key');
+          completer.completeError('Loading was unsuccessful: $key');
         } else if (!completer.isCompleted) {
-          log.d('Loading was successful. Race condition');
+          log.d('Loading was successful. Race condition: $key');
           completer.complete();
         }
       },
