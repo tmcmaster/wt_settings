@@ -4,8 +4,7 @@ import 'package:wt_settings/src/object_state_notifier.dart';
 import 'package:wt_settings/src/settings_object/settings_object_notifier.dart';
 import 'package:wt_settings/src/settings_object/settings_object_providers.dart';
 
-class SettingsObjectComponent<T, N extends ObjectStateNotifier<T>>
-    extends ConsumerWidget {
+class SettingsObjectComponent<T, N extends ObjectStateNotifier<T>> extends ConsumerWidget {
   final SettingsObjectProviders<T> providers;
   final String Function(T object) getId;
   final String Function(T object) getLabel;
@@ -26,6 +25,7 @@ class SettingsObjectComponent<T, N extends ObjectStateNotifier<T>>
     final values = ref.watch(providers.listProvider);
 
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(providers.label),
         const SizedBox(
