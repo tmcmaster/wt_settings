@@ -96,7 +96,7 @@ void main() async {
     );
     test(
       'String',
-      () async => providerTest(
+      () => providerTest(
         provider: TestSettings.string.value,
         notifier: TestSettings.string.notifier,
         initialValue: 'hamster',
@@ -114,7 +114,7 @@ void main() async {
 
 Future<void> providerTest<T, N extends LocalStorageStateNotifier<T>>({
   required StateNotifierProvider<N, T> provider,
-  required AlwaysAliveRefreshable<T> notifier,
+  required Refreshable<T> notifier,
   required T initialValue,
   required T testValue,
   required ProviderContainer riverpod,

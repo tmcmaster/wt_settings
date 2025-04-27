@@ -8,17 +8,18 @@ class SettingsDateComponent extends ConsumerStatefulWidget {
   final SettingsDateProviders providers;
   final String label;
   final String hint;
+  final DateTimePickerType type;
 
   const SettingsDateComponent({
     super.key,
     required this.providers,
     required this.label,
     required this.hint,
+    this.type = DateTimePickerType.date,
   });
 
   @override
-  ConsumerState<SettingsDateComponent> createState() =>
-      _SettingsDateComponentState();
+  ConsumerState<SettingsDateComponent> createState() => _SettingsDateComponentState();
 }
 
 class _SettingsDateComponentState extends ConsumerState<SettingsDateComponent> {
@@ -48,7 +49,7 @@ class _SettingsDateComponentState extends ConsumerState<SettingsDateComponent> {
     return SizedBox(
       width: 150,
       child: DateTimePicker(
-        type: DateTimePickerType.date,
+        type: widget.type,
         controller: controller,
         firstDate: DateTime(2020),
         lastDate: DateTime(2030),
