@@ -13,13 +13,13 @@ class SettingsColorNotifier extends LocalStorageStateNotifier<MaterialColor> {
 
   @override
   MaterialColor decode(String? value) {
-    final colorValue = value == null ? Colors.red.value : int.parse(value);
-    final colorOptions = values.where((color) => color.value == colorValue);
+    final colorValue = value == null ? Colors.red.toARGB32 : int.parse(value);
+    final colorOptions = values.where((color) => color.toARGB32 == colorValue);
     return colorOptions.isEmpty ? Colors.blue : colorOptions.first;
   }
 
   @override
   String encode(MaterialColor value) {
-    return value.value.toString();
+    return value.toARGB32.toString();
   }
 }

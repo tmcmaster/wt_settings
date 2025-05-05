@@ -4,8 +4,7 @@ import 'package:wt_settings/src/base_settings_providers.dart';
 import 'package:wt_settings/src/settings_enum/settings_enum_component.dart';
 import 'package:wt_settings/src/settings_enum/settings_enum_notifier.dart';
 
-class SettingsEnumProviders<T extends Enum>
-    extends BaseSettingsProviders<SettingsEnumNotifier<T>, T> {
+class SettingsEnumProviders<T extends Enum> extends BaseSettingsProviders<SettingsEnumNotifier<T>, T> {
   final List<T> values;
 
   SettingsEnumProviders({
@@ -27,5 +26,6 @@ class SettingsEnumProviders<T extends Enum>
           ),
         );
 
+  @override
   Widget get component => SettingsEnumComponent(providers: this);
 }

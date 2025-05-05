@@ -22,7 +22,7 @@ abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
 
   Future<SettingsStorage> get settingStorage => SettingsStorage.instance();
 
-  Future<bool> reload() async {
+  Future<bool> reload() {
     _loaded = false;
     return load();
   }

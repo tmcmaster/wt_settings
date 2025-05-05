@@ -4,12 +4,10 @@ import 'package:wt_settings/src/base_settings_providers.dart';
 import 'package:wt_settings/src/settings_int/settings_int_componnet.dart';
 import 'package:wt_settings/src/settings_int/settings_int_notifier.dart';
 
-class SettingsIntProviders
-    extends BaseSettingsProviders<SettingsIntNotifier, int> {
+class SettingsIntProviders extends BaseSettingsProviders<SettingsIntNotifier, int> {
   final bool hideLabel;
   final int? min;
   final int? max;
-  // late StateNotifierProvider<SettingsBoolNotifier, bool> value;
   SettingsIntProviders({
     required super.label,
     required super.hint,
@@ -30,6 +28,7 @@ class SettingsIntProviders
           ),
         );
 
+  @override
   Widget get component => SettingsIntComponent(
         providers: this,
         min: min,

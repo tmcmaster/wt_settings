@@ -1,6 +1,3 @@
-/// This is a library for using Shared Preferences and Riverpod for managing settings.
-library wt_settings;
-
 export 'src/base_settings_providers.dart';
 export 'src/local_storage_state_notifier.dart';
 export 'src/object_state_notifier.dart';

@@ -25,6 +25,7 @@ class SettingsBoolProviders extends BaseSettingsProviders<SettingsBoolNotifier, 
           ),
         );
 
+  @override
   Widget get component => SettingsBoolComponent(providers: this);
 
   Widget customComponent({

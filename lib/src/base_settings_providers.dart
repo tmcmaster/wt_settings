@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class BaseSettingsProviders<N extends StateNotifier<T>, T> {
@@ -11,5 +12,7 @@ abstract class BaseSettingsProviders<N extends StateNotifier<T>, T> {
     required this.hint,
   });
 
-  AlwaysAliveRefreshable<N> get notifier => value.notifier;
+  Refreshable<N> get notifier => value.notifier;
+
+  Widget get component;
 }

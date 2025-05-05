@@ -32,6 +32,7 @@ class SettingsObjectProviders<T> extends BaseSettingsProviders<SettingsObjectNot
           ),
         );
 
+  @override
   Widget get component => SettingsObjectComponent<T, ObjectStateNotifier<T>>(
         providers: this,
         getId: getId,

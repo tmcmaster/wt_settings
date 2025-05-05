@@ -36,7 +36,7 @@ void main() async {
   group('Test Settings Providers', () {
     test(
       'Boolean',
-      () async => providerTest(
+      () => providerTest(
         provider: TestSettings.boolean.value,
         notifier: TestSettings.boolean.notifier,
         initialValue: false,
@@ -46,7 +46,7 @@ void main() async {
     );
     test(
       'Color',
-      () async => providerTest(
+      () => providerTest(
         provider: TestSettings.color.value,
         notifier: TestSettings.color.notifier,
         initialValue: Colors.blue,
@@ -56,7 +56,7 @@ void main() async {
     );
     test(
       'Date',
-      () async => providerTest(
+      () => providerTest(
         provider: TestSettings.date.value,
         notifier: TestSettings.date.notifier,
         initialValue: '2024-01-01',
@@ -66,7 +66,7 @@ void main() async {
     );
     test(
       'Enumerate',
-      () async => providerTest(
+      () => providerTest(
         provider: TestSettings.enumerate.value,
         notifier: TestSettings.enumerate.notifier,
         initialValue: TestEnum.one,
@@ -76,7 +76,7 @@ void main() async {
     );
     test(
       'Integer',
-      () async => providerTest(
+      () => providerTest(
         provider: TestSettings.integer.value,
         notifier: TestSettings.integer.notifier,
         initialValue: 0,
@@ -86,7 +86,7 @@ void main() async {
     );
     test(
       'Object',
-      () async => providerTest(
+      () => providerTest(
         provider: TestSettings.object.value,
         notifier: TestSettings.object.notifier,
         initialValue: null,
