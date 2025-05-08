@@ -25,6 +25,6 @@ class SettingsColorNotifier extends LocalStorageStateNotifier<MaterialColor> {
 
   @override
   String encode(MaterialColor value) {
-    return value.toARGB32.toString();
+    return value.toARGB32().toString();
   }
 }
