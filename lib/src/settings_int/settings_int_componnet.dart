@@ -16,8 +16,7 @@ class SettingsIntComponent extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<SettingsIntComponent> createState() =>
-      _SettingsIntComponentState();
+  ConsumerState<SettingsIntComponent> createState() => _SettingsIntComponentState();
 }
 
 class _SettingsIntComponentState extends ConsumerState<SettingsIntComponent> {
@@ -41,6 +40,7 @@ class _SettingsIntComponentState extends ConsumerState<SettingsIntComponent> {
     final notifier = ref.read(widget.providers.notifier);
 
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         if (!widget.providers.hideLabel)
           Padding(
