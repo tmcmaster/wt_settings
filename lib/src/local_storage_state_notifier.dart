@@ -5,6 +5,7 @@ import 'package:wt_logging/wt_logging.dart';
 import 'package:wt_settings/src/storate/settings_storage.dart';
 
 // TODO: need to do some more testing and cleanup regarding timing issues
+// TODO: the settings should really be a FutureProvider that can be awaited. ?? need to review impact
 abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
   static final log = logger('LocalStorageStateNotifier', level: Level.warning);
 
