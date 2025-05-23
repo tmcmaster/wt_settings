@@ -1,6 +1,7 @@
 name: wt_settings
 description: Components to manage settings using SharedPreferences.
 version: 1.0.0+1
+repository: https://github.com/tmcmaster/wt_settings/tree/wix_admin
 homepage: https://github.com/tmcmaster/wt_settings
 publish_to: 'none'
 
