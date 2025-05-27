@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_settings/src/base_settings_providers.dart';
 import 'package:wt_settings/src/object_state_notifier.dart';
-import 'package:wt_settings/src/settings_object/settings_object_componnet.dart';
+import 'package:wt_settings/src/settings_object/settings_object_component.dart';
 import 'package:wt_settings/src/settings_object/settings_object_notifier.dart';
 
 class SettingsObjectProviders<T> extends BaseSettingsProviders<SettingsObjectNotifier<T>, T?> {

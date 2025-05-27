@@ -2,115 +2,104 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_logging/wt_logging.dart';
-import 'package:wt_settings/src/storate/settings_storage.dart';
+import 'package:wt_provider_manager/wt_provider_manager.dart';
+import 'package:wt_settings/src/storage/settings_storage.dart';
 
-// TODO: need to do some more testing and cleanup regarding timing issues
-// TODO: the settings should really be a FutureProvider that can be awaited. ?? need to review impact
-abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> {
-  static final log = logger('LocalStorageStateNotifier', level: Level.warning);
+abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> with WaitForIsReady {
+  static final log = logger(LocalStorageStateNotifier);
 
   final String key;
   final T none;
-  bool _loaded = false;
+
+  @override
+  late final Future isReady;
+
+  Completer<void> _loaded = Completer<void>();
+
   LocalStorageStateNotifier({
     required this.key,
     required this.none,
     required T initialValue,
   }) : super(initialValue) {
     log.d('About to load values: $key');
-    Future.delayed(const Duration(milliseconds: 1), load);
+    isReady = _loaded.future;
+    if (!_loaded.isCompleted) {
+      Future.delayed(const Duration(milliseconds: 1), _load);
+    }
   }
 
   Future<SettingsStorage> get settingStorage => SettingsStorage.instance();
 
   Future<bool> reload() {
-    _loaded = false;
-    return load();
+    log.d('Reloading the settings: $key');
+    if (_loaded.isCompleted) {
+      _loaded = Completer<void>();
+      return _load();
+    } else {
+      log.w('There setting is already in the process of being loaded: $key');
+      return Future.value(false);
+    }
   }
 
-  Future<bool> load() async {
-    if (_loaded) {
+  Future<bool> _load() async {
+    if (_loaded.isCompleted) {
+      log.w('The setting has already loaded: $key');
       return true;
     }
-    final encodedValue = (await settingStorage).getString(key);
-    if (encodedValue == null) {
-      log.d('Object has been loaded, but it was null. Setting $key to "none".');
-      state = none;
-      return _loaded = true;
-    } else {
-      final decodedValue = decode(encodedValue);
-      if (decodedValue == null) {
-        log.d('Could not decode data from Key($key).');
-        return _loaded = false;
+    try {
+      final encodedValue = (await settingStorage).getString(key);
+      if (encodedValue == null) {
+        log.d('Object has been loaded, but it was null. Setting $key to "none".');
+        state = none;
+        _loaded.complete();
+        return true;
       } else {
-        log.d('Loaded data for Key($key): Encoded($encodedValue), Decoded($decodedValue)');
-        replaceValue(decodedValue);
-        log.d('Values have been loaded: $key');
-        return _loaded = true;
+        final decodedValue = decode(encodedValue);
+        if (decodedValue == null) {
+          log.e('Could not decode data from Key($key).');
+          state = none;
+          if (!_loaded.isCompleted) {
+            _loaded.completeError('Could not decode data from Key($key): $encodedValue');
+          }
+          return false;
+        } else {
+          log.d('Loaded data for Key($key): Encoded($encodedValue), Decoded($decodedValue)');
+          state = decodedValue;
+          log.d('Key($key) values have been loaded: $encodedValue');
+          if (!_loaded.isCompleted) {
+            _loaded.complete();
+          }
+          return true;
+        }
       }
+    } catch (error) {
+      log.e('Could not load settings for Key($key): $error');
+      _loaded.completeError('Could not decode data from Key($key): $error');
+      return false;
     }
   }
 
   Future<void> replaceValue(T newValue) async {
-    if (!_loaded) {
-      try {
-        await _waitForLoadingToComplete();
-      } catch (error) {
-        log.e('Waiting for load to complete failed: $key : $error');
-        return;
-      }
+    if (!_loaded.isCompleted) {
+      await _loaded.future;
     }
-
     log.d('Replacing data with Key($key): $newValue');
     state = newValue;
-    log.d('AAA: State: $key : $state');
+    _persistState();
+  }
+
+  Future<void> _persistState() async {
     final encodedValue = encode(state);
-    log.d('AAA: EncodedValue: $encodedValue');
     log.d('Saving data with Key($key): Encoded($encodedValue), Decoded($state)');
     if (encodedValue == null) {
       log.d('Removing value from SettingsStorage: $key');
       (await settingStorage).remove(key);
     } else {
-      log.d('Saving new value to SettingsStorage: $encodedValue');
+      log.d('Saving new value to SettingsStorage with Key($key): $encodedValue');
       (await settingStorage).setString(key, encodedValue);
     }
-
-    log.d('AAA: State: $key : $state');
   }
 
   String? encode(T value);
   T decode(String? value);
-
-  Future<void> _waitForLoadingToComplete() {
-    if (_loaded) return Future.value();
-    final completer = Completer<void>();
-
-    final timer = Timer.periodic(
-      const Duration(milliseconds: 100),
-      (timer) {
-        log.d('Waiting for $key loading to complete....');
-        if (_loaded) {
-          log.d('Loading was successful: $key');
-          timer.cancel();
-          completer.complete();
-        }
-      },
-    );
-
-    Future.delayed(
-      const Duration(seconds: 2),
-      () {
-        timer.cancel();
-        if (!_loaded) {
-          log.d('Loading was unsuccessful: $key');
-          completer.completeError('Loading was unsuccessful: $key');
-        } else if (!completer.isCompleted) {
-          log.d('Loading was successful. Race condition: $key');
-          completer.complete();
-        }
-      },
-    );
-
-    return completer.future;
-  }
 }

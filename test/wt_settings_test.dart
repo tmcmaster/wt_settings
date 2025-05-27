@@ -9,7 +9,7 @@ import 'package:wt_settings/src/settings_date/settings_date_providers.dart';
 import 'package:wt_settings/src/settings_int/settings_int_providers.dart';
 import 'package:wt_settings/src/settings_object/settings_object_providers.dart';
 import 'package:wt_settings/src/settings_string/settings_string_providers.dart';
-import 'package:wt_settings/src/storate/settings_storage.dart';
+import 'package:wt_settings/src/storage/settings_storage.dart';
 
 void main() async {
   final log = logger('Unit Tests', level: Level.debug);

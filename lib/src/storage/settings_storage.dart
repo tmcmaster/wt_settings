@@ -1,9 +1,9 @@
 import 'package:wt_logging/wt_logging.dart';
-import 'package:wt_settings/src/storate/settings_storage_memory_cache.dart';
-import 'package:wt_settings/src/storate/settings_storage_shared_preferences.dart';
+import 'package:wt_settings/src/storage/settings_storage_memory_cache.dart';
+import 'package:wt_settings/src/storage/settings_storage_shared_preferences.dart';
 
 mixin SettingsStorage {
-  static final log = logger(SettingsStorage, level: Level.warning);
+  static final log = logger(SettingsStorage);
 
   Future<bool> remove(String key);
   Future<bool> setString(String key, String value);
@@ -31,11 +31,9 @@ mixin SettingsStorage {
     return _instance!;
   }
 
-  static Future<SettingsStorage> Function() memoryCache =
-      () => SettingsStorageMemoryCache.instance();
+  static Future<SettingsStorage> Function() memoryCache = () => SettingsStorageMemoryCache.instance();
 
-  static Future<SettingsStorage> Function() sharedPreferences =
-      () => SettingsStorageSharedPreferences.instance();
+  static Future<SettingsStorage> Function() sharedPreferences = () => SettingsStorageSharedPreferences.instance();
 
   // TODO: add SettingsStorage support for firebase. (the implementation should be in Firepod).
 }

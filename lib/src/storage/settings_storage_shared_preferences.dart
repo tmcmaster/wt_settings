@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wt_settings/src/storate/settings_storage.dart';
+import 'package:wt_settings/src/storage/settings_storage.dart';
 
 class SettingsStorageSharedPreferences with SettingsStorage {
   late SharedPreferences _preferences;

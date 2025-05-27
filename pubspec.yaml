@@ -18,7 +18,7 @@ dependencies:
   logger:
   mockito: any
   number_selector:
-  shared_preferences:
+  shared_preferences: ^2.2.2
   spring_button:
   wt_logging:
     git:
@@ -26,6 +26,9 @@ dependencies:
   wt_models:
     git:
       url: git@github.com:tmcmaster/wt_models.git
+  wt_provider_manager:
+    git:
+      url: git@github.com:tmcmaster/wt_provider_manager.git
 
 dev_dependencies:
   build_runner: any
@@ -35,6 +38,12 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-#dependency_overrides:
-#  date_time_picker:
-#    path: ../../fork/date_time_picker
+dependency_overrides:
+  date_time_picker:
+    path: ../../fork/date_time_picker
+  wt_logging:
+    path: ../wt_logging
+  wt_models:
+    path: ../wt_models
+  wt_provider_manager:
+    path: ../wt_provider_manager

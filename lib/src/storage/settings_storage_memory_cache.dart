@@ -1,4 +1,4 @@
-import 'package:wt_settings/src/storate/settings_storage.dart';
+import 'package:wt_settings/src/storage/settings_storage.dart';
 
 class SettingsStorageMemoryCache with SettingsStorage {
   final Map<String, dynamic> _preferences;
@@ -23,23 +23,19 @@ class SettingsStorageMemoryCache with SettingsStorage {
   Object? get(String key) => _preferences[key];
 
   @override
-  bool? getBool(String key) =>
-      _preferences.containsKey(key) ? bool.parse(_preferences[key].toString()) : null;
+  bool? getBool(String key) => _preferences.containsKey(key) ? bool.parse(_preferences[key].toString()) : null;
 
   @override
-  double? getDouble(String key) =>
-      _preferences.containsKey(key) ? double.parse(_preferences[key].toString()) : null;
+  double? getDouble(String key) => _preferences.containsKey(key) ? double.parse(_preferences[key].toString()) : null;
 
   @override
-  int? getInt(String key) =>
-      _preferences.containsKey(key) ? int.parse(_preferences[key].toString()) : null;
+  int? getInt(String key) => _preferences.containsKey(key) ? int.parse(_preferences[key].toString()) : null;
 
   @override
   Set<String> getKeys() => _preferences.keys.toSet();
 
   @override
-  String? getString(String key) =>
-      _preferences.containsKey(key) ? _preferences[key].toString() : null;
+  String? getString(String key) => _preferences.containsKey(key) ? _preferences[key].toString() : null;
 
   @override
   Future<bool> remove(String key) {

@@ -3,11 +3,13 @@ import 'package:wt_logging/wt_logging.dart';
 import 'package:wt_settings/src/local_storage_state_notifier.dart';
 
 class SettingsObjectNotifier<T> extends LocalStorageStateNotifier<T?> {
-  static final log = logger(SettingsObjectNotifier, level: Level.debug);
+  static final log = logger(SettingsObjectNotifier);
 
+  String? _value;
   List<T> _values = const [];
   final String Function(T object) getId;
   late ProviderSubscription _removeListener;
+
   SettingsObjectNotifier({
     required super.key,
     required super.initialValue,
@@ -16,37 +18,44 @@ class SettingsObjectNotifier<T> extends LocalStorageStateNotifier<T?> {
     required Ref ref,
     required StateNotifierProvider<StateNotifier<List<T>?>, List<T>?> listProvider,
   }) {
-    // TODO: need to add an onError
-    _removeListener = ref.listen<List<T>?>(listProvider, (oldValues, newValues) {
-      _values = newValues ?? [];
+    log.i('About to listen for changes to the list($key)');
 
-      final newList = newValues;
-      log.d('List has changed $newList}');
-      if (_siteLoaded()) {
-        if (_siteSelected()) {
-          log.d('There is a current selected value, '
-              'so checking if the current value is in the new list');
-        } else {
-          if (_listLoaded(newList)) {
-            if (_listContainsSelectedSite(newList)) {
-              log.d('Selected value was in the new list');
+    // TODO: need to add an onError
+    _removeListener = ref.listen<List<T>?>(
+      listProvider,
+      fireImmediately: true,
+      (oldValues, newValues) {
+        _values = newValues ?? [];
+
+        final newList = newValues;
+        log.d('List has changed $newList}');
+        if (_siteLoaded()) {
+          if (_siteSelected()) {
+            log.d('There is a current selected value, '
+                'so checking if the current value is in the new list');
+          } else {
+            if (_listLoaded(newList)) {
+              if (_listContainsSelectedSite(newList)) {
+                log.d('Selected value was in the new list');
+              } else {
+                log.d('There is no current selected value, '
+                    'so first item of the list will be selected.');
+                _setSiteToFirstSiteInList(_values);
+              }
             } else {
               log.d('There is no current selected value, '
-                  'so first item of the list will be selected.');
-              load();
-              _setSiteToFirstSiteInList(_values);
+                  'but list has not been loaded yet.');
             }
-          } else {
-            log.d('There is no current selected value, '
-                'but list has not been loaded yet.');
           }
+        } else {
+          log.d('List has loaded, but the selected value has not loaded yet. '
+              'Reloading selected value.');
         }
-      } else {
-        log.d('List has loaded, but the selected value has not loaded yet. '
-            'Reloading selected value.');
-        load();
-      }
-    });
+      },
+      onError: (error, _) {
+        log.e('There was an error while listening to list($key): $error');
+      },
+    );
   }
 
   bool _listLoaded(List<T>? list) {
@@ -71,7 +80,14 @@ class SettingsObjectNotifier<T> extends LocalStorageStateNotifier<T?> {
   // ignore: unused_element
   void _setSiteToFirstSiteInList(List<T>? list) {
     if (list != null && list.isNotEmpty) {
-      super.replaceValue(list[0]);
+      if (_value == null) {
+        super.replaceValue(list[0]);
+      } else {
+        log.d('There was a Value($_value). Checking the existing list.');
+        final possibleValues = _values.where((v) => getId(v) == _value).toList();
+        final selectedValue = (possibleValues.isEmpty ? _values[0] : possibleValues.first);
+        super.replaceValue(selectedValue);
+      }
     }
   }
 
@@ -83,12 +99,13 @@ class SettingsObjectNotifier<T> extends LocalStorageStateNotifier<T?> {
 
   @override
   T? decode(String? value) {
+    _value = value;
     if (value == null || value.isEmpty) {
-      return none;
+      return null;
     } else {
       if (_values.isEmpty) {
         log.d('There was a Value($value), but the list was not available yet.');
-        return null;
+        return none;
       } else {
         log.d('There was a Value($value). Checking the existing list.');
         final possibleValues = _values.where((v) => getId(v) == value).toList();
