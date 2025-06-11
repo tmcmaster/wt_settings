@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_logging/wt_logging.dart';
-import 'package:wt_provider_manager/wt_provider_manager.dart';
+import 'package:wt_provider_manager/provider_manager.dart';
 import 'package:wt_settings/src/storage/settings_storage.dart';
 
 abstract class LocalStorageStateNotifier<T> extends StateNotifier<T> with WaitForIsReady {
